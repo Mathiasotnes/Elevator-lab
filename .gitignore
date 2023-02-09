@@ -1,52 +1,18 @@
-# Prerequisites
-*.d
+# Gitignore
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Directories
+build/
+.vscode/
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Files
+/elevator
+/SimElevatorServer
+/simulator.con
+drivers/elevio.con
 
-# Precompiled Headers
-*.gch
-*.pch
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+.vscode/tasks.json
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+## Prevent MacOS clutter (.DS_Store files contain information about folder structure, etc)
+.DS_Store

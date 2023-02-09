@@ -8,9 +8,12 @@ EXCLUDE     = '*test*'
 
 
 SOURCEDIR = src
+DRIVERDIR = drivers
 OBJECTDIR = build
 
 SOURCES := $(patsubst $(SOURCEDIR)/%, %, $(shell find $(SOURCEDIR) -name '*.c'  ! -name $(EXCLUDE)  ! -path $(EXCLUDE)))
+SOURCES += $(patsubst $(DRIVERDIR)/%, %, $(shell find $(DRIVERDIR) -name '*.c'  ! -name $(EXCLUDE)  ! -path $(EXCLUDE)))
+SOURCES += main.c
 OBJECTS = $(addprefix $(OBJECTDIR)/, $(SOURCES:.c=.o))
 
 all: $(EXECUTABLE) 
@@ -28,8 +31,14 @@ $(EXECUTABLE): $(OBJECTS)
 ## object files depend on source files: compile them
 $(OBJECTDIR)/%.o: $(SOURCEDIR)/%.c
 	@mkdir -p $(@D)
-	$(COMPILER) -o $@ -c $(CFLAGS) $<
+	$(COMPILER) -c $(CFLAGS) $< -o $@
 
-	
+$(OBJECTDIR)/%.o: $(DRIVERDIR)/%.c
+	@mkdir -p $(@D)
+	$(COMPILER) -c $(CFLAGS) $< -o $@
+
+$(OBJECTDIR)/%.o: %.c
+	@mkdir -p $(@D)
+	$(COMPILER) -c $(CFLAGS) $< -o $@
+
 .PHONY: all rebuild clean
-

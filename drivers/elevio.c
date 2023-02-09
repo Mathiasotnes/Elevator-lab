@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#include "../inc/elevio.h"
-#include "../inc/con_load.h"
+#include "elevio.h"
+#include "con_load.h"
 
 static int sockfd;
 static pthread_mutex_t sockmtx;

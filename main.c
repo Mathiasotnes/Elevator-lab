@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
-#include "../inc/elevio.h"
+
+#include "drivers/elevio.h"
+#include "inc/main.h"
 
 
-int main(){
+int main() {
     elevio_init();
     
     printf("=== Example Program ===\n");
