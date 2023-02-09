@@ -1,14 +1,15 @@
 
+
 typedef enum Direction{
     up,
     down
-};
+} Direction;
 
 
-typedef struct Order{
+struct Order{
     int start_floor;
     int stop_floor;
     Direction direction;
-    bool start_light;
-    bool stop_light;
-}
+    int start_light;
+    int stop_light;
+};

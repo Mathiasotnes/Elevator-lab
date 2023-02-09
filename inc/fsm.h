@@ -4,4 +4,4 @@ typedef enum ElevatorState{
     goingDown,
     neutral,
     stop
-};
+} ElevatorState;
