@@ -1,6 +1,7 @@
 #include "order.h"
 
-typedef enum {
+/* Datatypes */
+typedef enum ElevatorState {
     Neutral,
     StillUp,
     StillDown,
@@ -10,9 +11,11 @@ typedef enum {
     FloorhitDown
 } ElevatorState;
 
-struct Elevator{
+typedef struct Elevator{
     int floor;
     ElevatorState state;
     Order order_list[20];
-};
+} Elevator;
+
+
 
