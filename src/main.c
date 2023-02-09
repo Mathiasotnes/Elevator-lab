@@ -5,7 +5,6 @@
 #include "../inc/elevio.h"
 
 
-
 int main(){
     elevio_init();
     

@@ -1,8 +1,18 @@
-#include "../inc/fsm.h"
+#include "order.h"
 
+typedef enum {
+    Neutral,
+    StillUp,
+    StillDown,
+    MovingUp,
+    MovingDown,
+    FloorHitUp,
+    FloorhitDown
+} ElevatorState;
 
 struct Elevator{
     int floor;
     ElevatorState state;
-    //vector<order> order_list;
+    Order order_list[20];
 };
+
