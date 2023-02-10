@@ -1,6 +1,5 @@
+#pragma once
 #include <time.h>
-
-#include "order.h"
 #include "../drivers/elevio.h"
 
 typedef enum DoorState {

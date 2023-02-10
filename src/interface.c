@@ -44,6 +44,8 @@ void update_door(Door *door) {
         break;
     case Closed:
         /* Trenger et åpningssignal for å gå i state "Open" og resette klokkene */
+        /* Bare sett instansen av door->state til Open, */
+        /* Da vil automatisk lyset skrus på og timer starte */
         elevio_doorOpenLamp(0);
         break;
     default:
