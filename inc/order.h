@@ -5,6 +5,7 @@ typedef enum Direction{
 } Direction;
 
 
+/* Ikke helt fornøyd med denne, bør revideres før logikk-implementasjon */
 typedef struct Order{
     int start_floor;
     int stop_floor;
