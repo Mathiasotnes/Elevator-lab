@@ -34,5 +34,7 @@ typedef struct Elevator{
     Order order_list[20];
 } Elevator;
 
+Elevator* innit();
+
 #endif
 
