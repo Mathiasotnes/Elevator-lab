@@ -1,5 +1,5 @@
-
-
+#ifndef INC_ORDER_H
+#define INC_ORDER_H
 typedef enum Direction{
     up,
     down
@@ -7,6 +7,7 @@ typedef enum Direction{
 
 
 typedef struct Order{
+    int valid; //Denne er midlertidig intil bedre løsning
     int start_floor;
     int stop_floor;
     Direction direction;
@@ -14,3 +15,5 @@ typedef struct Order{
     int stop_light;
     short int order_ID;
 }Order;
+
+#endif

@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "elevator.h": "c"
+        "elevator.h": "c",
+        "logic.h": "c",
+        "fsm.h": "c"
     }
 }
