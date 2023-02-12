@@ -1,4 +1,7 @@
 #include "../inc/logic.h"
+#include "../inc/elevator.h"
+#include "../inc/order.h"
+#include <stdio.h>
 
 ElevatorState logic(Elevator* elevator) {
 
@@ -21,23 +24,125 @@ ElevatorState logic(Elevator* elevator) {
         switch (elevator->state)
         {
         case Neutral:
-            // Christoffers Algoritme 1 :)
+            return fromNeutral(elevator);
             break;
         case StillUp:
-            // Christoffers Algoritme 2 :)
+            return fromStill(elevator);
             break;
         case StillDown:
-            // Christoffers Algoritme 2 :)
+            return fromStill(elevator);
             break;
         case FloorHitUp:
-            // Christoffers Algoritme 3 :)
+            return fromFloorHit(elevator);
             break;
         case FloorhitDown:
-            // Christoffers Algoritme 3 :)
+            return fromFloorHit(elevator);
             break;
         default:
+            printf("Unknown state has accured, please build a better elevator ...");
             break;
         }
     return next_state;
 }
 
+ElevatorState fromNeutral(Elevator *elevator){
+    // 1. Check for edge cases
+    if(elevator->floor == 1 || elevator->floor == 4){
+        for (int i = 0; i < 20; i++){
+            if(elevator->order_list[i].valid){
+                if(elevator->order_list[i].start_floor > elevator->floor)
+                    return StillUp;
+                else if(elevator->order_list[i].start_floor < elevator->floor)
+                    return StillDown;
+            }
+        }
+    }
+
+    //2. Check order from whithin
+    for (int i = 0; i < 20; i++){
+        if(elevator->order_list[i].valid){
+            if(elevator->order_list[i].stop_floor > elevator->floor)
+                return StillUp;
+            else if(elevator->order_list[i].stop_floor < elevator->floor)
+                return StillDown;
+        }
+    }
+    
+    //3. Checks for orders from outside cabin
+    for (int i = 0; i < 20; i++){
+        if(elevator->order_list[i].valid){
+            if(elevator->order_list[i].start_floor > elevator->floor)
+                return StillUp;
+            else if(elevator->order_list[i].start_floor < elevator->floor)
+                return StillDown;
+        }
+    }
+    
+    //4. No orders found keep neutral position
+    return Neutral;
+}
+
+ElevatorState fromStill(Elevator *elevator){
+
+    //Prioritze checking for floor hits with order list
+    for (int i = 0; i < 20; i++){
+        if(elevator->order_list[i].valid){
+            if (elevator->order_list[i].stop_floor == elevator->floor && elevator->state == StillUp)
+                return FloorHitUp;
+            else if (elevator->order_list[i].stop_floor == elevator->floor && elevator->state == StillDown)
+                return FloorhitDown;
+        }
+    }
+
+    //if no floor-hit, detmerine if we should keep going
+    for (int i = 0; i < 20; i++){
+        if(elevator->order_list[i].valid){
+            if(elevator->state == StillUp){
+                if(elevator->order_list[i].direction == up && elevator->order_list[i].start_floor > elevator->floor)
+                    return MovingUp;
+            }
+            if (elevator->state == StillDown){
+                 if(elevator->order_list[i].direction == down && elevator->order_list[i].start_floor < elevator->floor)
+                    return MovingDown;
+            }
+        }
+    }
+
+    //If there were no order from cabin, and no orders from outside.
+    //Elevator should be finished and go to neutral
+    return Neutral;
+}
+
+ElevatorState fromFloorHit(Elevator *elevator){
+    //Checks for edge cases
+    //TODO: needs to be adressed in statediagram
+    if(elevator->floor == 4)
+        return Neutral;
+    else if (elevator->floor == 1)
+        return Neutral;
+
+    //Checks if we should stop here
+    //Important that order is deleted whithin next iteration else we are trapped
+    for (int i = 0; i < 20; i++){
+        if(elevator->order_list[i].valid){
+            if(elevator->order_list[i].stop_floor == elevator->floor){
+                if(elevator->state == FloorHitUp)
+                    return StillUp;
+                else if(elevator->state == FloorhitDown)
+                    return StillDown;
+            }
+        }
+    }
+    
+    //If elevator is not stopping (if we are going XX we should keep going same direction)
+    if(elevator->state == FloorHitUp)
+        return MovingUp;
+    else if(elevator->state == FloorhitDown)
+        return MovingDown;
+    else{
+        //This should not happen, but is implemented purly for debugging purposes
+        //printf("Elevator has come to undefined state based on current state: %s \n", to_state_str[elevator->state]);
+        printf("Elevator is set to neutral position!\n");
+        return Neutral;
+    }
+}

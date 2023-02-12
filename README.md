@@ -6,3 +6,4 @@ Heislab i TTK4235.
 
 ## License
 Fint om dere spør først liksom
+We will fucking sue you!
