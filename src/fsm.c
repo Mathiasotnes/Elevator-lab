@@ -1,22 +1,25 @@
 #include "../inc/fsm.h"
 #include "../drivers/elevio.h"
+#include "../inc/logic.h"
+#include "../inc/interface.h"
+#include <stdio.h>
 
 void FSM_thread(Elevator* elevator, Door* door) {
     int floor_sensor = -1;
         switch (elevator->state)
         {
         case Neutral:
-            //Function for determning the next state
+            //Function for determining the next state
             elevator->state = logic(elevator);
             // Display lights
             break;
         case StillUp:
-            //Function for ddetermning the next state
+            //Function for determining the next state
             elevator->state = logic(elevator);
             // Display lights
             break;
         case StillDown:
-            //Function for determning the next state
+            //Function for determining the next state
             elevator->state = logic(elevator);
             // Display lights
             break;
@@ -43,16 +46,17 @@ void FSM_thread(Elevator* elevator, Door* door) {
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
             }
-            // Christoffers Algoritme 3 :)
+             elevator->state = logic(elevator);
             break;
         case FloorhitDown:
             update_door(door);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
             }
-            // Christoffers Algoritme 3 :)
+             elevator->state = logic(elevator);
             break;
         default:
+            printf("Elevator has been set in service mode, please use stairs!\n");
             break;
         }
         

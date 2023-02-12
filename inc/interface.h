@@ -18,3 +18,5 @@ typedef struct Door{
 /* Functions */
 Door* initialize_door(int timeout);
 
+void update_door(Door *door);
+
