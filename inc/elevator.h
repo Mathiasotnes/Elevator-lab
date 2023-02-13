@@ -1,3 +1,5 @@
+#include "../inc/order.h"
+
 #ifndef INC_ELEVATOR_H
 #define INC_ELEVATOR_H
 #include "../inc/order.h"
@@ -23,7 +25,7 @@ typedef struct Elevator{
     int queue[N_FLOORS][N_BUTTONS];
 } Elevator;
 
-void innit();
+Elevator* initialize_elevator();
 
 #endif
 
