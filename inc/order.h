@@ -16,4 +16,7 @@ typedef struct Order{
     short int order_ID;
 }Order;
 
+void update_orders(Order* order_list);
+void complete_order(Order* order);
+
 #endif

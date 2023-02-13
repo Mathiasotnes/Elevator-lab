@@ -1,6 +1,7 @@
+#include "../inc/order.h"
+
 #ifndef INC_ELEVATOR_H
 #define INC_ELEVATOR_H
-#include "../inc/order.h"
 
 /* Datatypes */
 typedef enum ElevatorState {
@@ -19,7 +20,7 @@ typedef struct Elevator{
     Order order_list[20];
 } Elevator;
 
-void innit();
+Elevator* initialize_elevator();
 
 #endif
 

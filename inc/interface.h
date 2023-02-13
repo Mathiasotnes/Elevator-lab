@@ -1,6 +1,8 @@
-#pragma once
 #include <time.h>
 #include "../drivers/elevio.h"
+
+#ifndef INC_INTERFACE_H
+#define INC_INTERFACE_H
 
 typedef enum DoorState {
     Open,
@@ -20,3 +22,4 @@ Door* initialize_door(int timeout);
 
 void update_door(Door *door);
 
+#endif

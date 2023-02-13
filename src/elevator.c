@@ -1,20 +1,9 @@
 #include "../inc/elevator.h"
 #include "../inc/interface.h"
 #include "../inc/fsm.h"
-
-Elevator* initialize_elevator() {
-    Elevator* elevator =0;
-    elevator->floor = 2; // Dette må løses, hvordan skal den boote opp?
-    elevator->state = Neutral;
-    // elevator->order_list = mange mange nullere :)
-    return elevator;
-}
 #include "../drivers/elevio.h"
 
-
-void innit(){
-    //Initilizing door
-    Door* door = initialize_door(3000);
+Elevator* initialize_elevator(){
 
     Elevator *elevator = 0;
 
@@ -33,5 +22,5 @@ void innit(){
     elevator->floor = currentFloor;
     elevator->state = Neutral;
 
-    FSM_thread(elevator, door);
+    return elevator;
 }
