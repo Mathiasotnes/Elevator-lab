@@ -7,10 +7,8 @@ Elevator* initialize_elevator(){
 
     Elevator *elevator = 0;
 
-    //Making empty order list
-    for (int i = 0; i < 20; i++){
-        elevator->order_list[i].valid = 0;
-    }
+    //Intilizing queue
+    **elevator->queue = initialize_order_list(); //Not to sure about this ...
 
     //Defining floor
     int currentFloor = elevio_floorSensor();
