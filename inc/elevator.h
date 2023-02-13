@@ -19,8 +19,7 @@ typedef struct Elevator{
     ElevatorState state;
     Order order_list[20];
 
-    //Potential order 
-    int queue[N_FLOORS][N_BUTTONS];
+    OrderMatrix *queue[N_FLOORS][N_BUTTONS];
 } Elevator;
 
 Elevator* initialize_elevator();
