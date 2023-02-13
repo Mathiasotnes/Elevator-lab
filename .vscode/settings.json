@@ -2,6 +2,7 @@
     "files.associations": {
         "elevator.h": "c",
         "logic.h": "c",
-        "fsm.h": "c"
+        "fsm.h": "c",
+        "elevio.h": "c"
     }
 }
