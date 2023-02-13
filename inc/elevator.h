@@ -1,5 +1,3 @@
-#include "../inc/order.h"
-
 #ifndef INC_ELEVATOR_H
 #define INC_ELEVATOR_H
 #include "../inc/order.h"
