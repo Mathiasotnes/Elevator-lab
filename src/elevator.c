@@ -5,10 +5,10 @@
 
 Elevator* initialize_elevator(){
 
-    Elevator *elevator = 0;
+    Elevator *elevator;
 
     //Intilizing queue
-    **elevator->queue = initialize_order_list(); //Not to sure about this ...
+    elevator->queue = initialize_order_list(); 
 
     //Defining floor
     int currentFloor = elevio_floorSensor();

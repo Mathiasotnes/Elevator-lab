@@ -52,9 +52,9 @@ ElevatorState fromNeutral(Elevator *elevator){
     // 1. Check for edge-cases
     if(elevator->floor == 1 || elevator->floor == 4){
         for(int f = 0; f < N_FLOORS; f++){
-            if(***elevator->queue[f][2] == BTN_PRESSED && f >= elevator->floor)
+            if(*elevator->queue[f][2] == BTN_PRESSED && f >= elevator->floor)
                 return StillUp;
-            else if(***elevator->queue[f][2] == BTN_PRESSED && f <= elevator->floor)
+            else if(*elevator->queue[f][2] == BTN_PRESSED && f <= elevator->floor)
                 return StillDown;   
         }
         
@@ -72,9 +72,9 @@ ElevatorState fromNeutral(Elevator *elevator){
 
     //2. Check order from whithin
     for(int f = 0; f < N_FLOORS; f++){ 
-        if(***elevator->queue[f][2] == BTN_PRESSED && f > elevator->floor)
+        if(*elevator->queue[f][2] == BTN_PRESSED && f > elevator->floor)
             return StillUp;
-        else if(***elevator->queue[f][2] == BTN_PRESSED && f < elevator->floor)
+        else if(*elevator->queue[f][2] == BTN_PRESSED && f < elevator->floor)
             return StillDown;
     }
 
@@ -92,9 +92,9 @@ ElevatorState fromNeutral(Elevator *elevator){
     //3. Checks for orders from outside cabin
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
-            if(***elevator->queue[f][b] == BTN_PRESSED && f > elevator->floor)
+            if(*elevator->queue[f][b] == BTN_PRESSED && f > elevator->floor)
                 return StillUp;
-            else if(***elevator->queue[f][b] == BTN_PRESSED && f < elevator->floor)
+            else if(*elevator->queue[f][b] == BTN_PRESSED && f < elevator->floor)
                 return StillDown;
         }
     }
@@ -118,9 +118,9 @@ ElevatorState fromStill(Elevator *elevator){
 
     //Prioritze checking for floor hits with order list
     for(int f = 0; f < N_FLOORS; f++){
-        if(***elevator->queue[f][2] == elevator->floor && elevator->state == StillUp)
+        if(*elevator->queue[f][2] == elevator->floor && elevator->state == StillUp)
             return FloorHitUp;
-        else if(***elevator->queue[f][2] == elevator->floor && elevator->state == StillDown)
+        else if(*elevator->queue[f][2] == elevator->floor && elevator->state == StillDown)
             return FloorhitDown;
     }
 
@@ -138,11 +138,11 @@ ElevatorState fromStill(Elevator *elevator){
     //if no floor-hit, detmerine if we should keep going
     for(int f = 0; f < N_FLOORS; f++){
         if(elevator->state == StillUp){
-            if(***elevator->queue[f][0] && f > elevator->floor)
+            if(*elevator->queue[f][0] && f > elevator->floor)
                 return MovingUp;
         }
         if(elevator->state == StillDown){
-            if(***elevator->queue[f][1] && f < elevator->floor)
+            if(*elevator->queue[f][1] && f < elevator->floor)
                 return MovingDown;
         }
     }
@@ -178,7 +178,7 @@ ElevatorState fromFloorHit(Elevator *elevator){
     //Checks if we should stop here
     //Important that order is deleted whithin next iteration else we are trapped
     for(int f = 0; f < N_FLOORS; f++){
-        if(***elevator->queue[f][2] == BTN_PRESSED && f == elevator->floor){
+        if(*elevator->queue[f][2] == BTN_PRESSED && f == elevator->floor){
             if(elevator->state == FloorHitUp)
                 return StillUp;
             else if(elevator->state == FloorhitDown)
