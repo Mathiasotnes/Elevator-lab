@@ -1,5 +1,3 @@
-#include "../inc/order.h"
-
 #ifndef INC_ELEVATOR_H
 #define INC_ELEVATOR_H
 #include "../inc/order.h"
@@ -19,10 +17,9 @@ typedef enum ElevatorState {
 typedef struct Elevator{
     int floor;
     ElevatorState state;
-    Order order_list[20];
+    //Order order_list[20];
 
-    //Potential order 
-    int queue[N_FLOORS][N_BUTTONS];
+    OrderMatrix *queue;
 } Elevator;
 
 Elevator* initialize_elevator();
