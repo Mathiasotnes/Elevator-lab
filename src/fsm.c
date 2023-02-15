@@ -10,21 +10,33 @@ void FSM_thread(Elevator* elevator, Door* door) {
         switch (elevator->state)
         {
         case Neutral:
+            update_door(door);
             elevator->state = logic(elevator);
             break;
         case StillUp:
-            elevator->state = logic(elevator);
-            door->state = Open;
+            if(door->state == Closing) {
+                elevator->state = logic(elevator);
+                break;
+            }
+            if(door->state == Closed) {
+                open_door(door);
+            }
+            update_door(door);
             complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
             complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case StillDown:
-            elevator->state = logic(elevator);
+            if(door->state == Closing) {
+                elevator->state = logic(elevator);
+                break;
+            }
             door->state = Open;
+            update_door(door);
             complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
             complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case MovingUp:
+            update_door(door);
             floor_sensor = elevio_floorSensor();
             if(floor_sensor != -1) {
                 elevator->floor = floor_sensor;
