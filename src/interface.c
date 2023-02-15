@@ -10,6 +10,12 @@ Door* initialize_door(int timeout) {
     return door;
 }
 
+void open_door(Door *door) {
+    door->state = Open;
+    door->start_time = clock();
+    door->elapsed_time = clock();
+}
+
 void update_door(Door *door) {
     int elapsed_time_ms = (door->elapsed_time - door->start_time) * 1000 / CLOCKS_PER_SEC;
     switch (door->state)
@@ -20,6 +26,10 @@ void update_door(Door *door) {
             door->state = Closing;
         }
         else if(elevio_stopButton()) {
+            door->start_time = clock();
+            door->elapsed_time = clock();
+        }
+        else if(elevio_obstruction()) {
             door->start_time = clock();
             door->elapsed_time = clock();
         }
