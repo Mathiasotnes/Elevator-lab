@@ -5,5 +5,5 @@ Heislab i TTK4235.
 - Mattyboy og chrissychris
 
 ## License
-Fint om dere spør først liksom
+Fint om dere spør først liksom__
 We will fucking sue you!
