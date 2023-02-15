@@ -6,22 +6,23 @@
 
 void FSM_thread(Elevator* elevator, Door* door) {
     int floor_sensor = -1;
+    update_orders(elevator->queue);
         switch (elevator->state)
         {
         case Neutral:
-            //Function for determining the next state
             elevator->state = logic(elevator);
-            // Display lights
             break;
         case StillUp:
-            //Function for determining the next state
             elevator->state = logic(elevator);
-            // Display lights
+            door->state = Open;
+            complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
+            complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case StillDown:
-            //Function for determining the next state
             elevator->state = logic(elevator);
-            // Display lights
+            door->state = Open;
+            complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
+            complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case MovingUp:
             floor_sensor = elevio_floorSensor();
