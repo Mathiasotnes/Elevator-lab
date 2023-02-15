@@ -16,17 +16,18 @@ OrderMatrix* initialize_order_list() {
 /* works with the zero-indexed floor variable "f" */
 void create_order(OrderMatrix* order_list, int floor, ButtonType button_type) {
     *order_list[floor][button_type] = BTN_PRESSED;
+    elevio_buttonLamp(floor, button_type, BTN_PRESSED);
 }
 
 void complete_order(OrderMatrix* order_list, int floor, ButtonType button_type) {
     *order_list[floor][button_type] = BTN_NOT_PRESSED;
+    elevio_buttonLamp(floor, button_type, BTN_NOT_PRESSED);
 }
 
 void update_orders(OrderMatrix* order_list) {
     for(int f = 0; f < N_FLOORS; f++){
             for(int b = 0; b < N_BUTTONS; b++){
                 int btnPressed = elevio_callButton(f, b);
-                elevio_buttonLamp(f, b, btnPressed);
                 if(btnPressed && *order_list[f][b] == BTN_NOT_PRESSED) {
                     create_order(order_list, f, b);
                 }
