@@ -10,10 +10,12 @@ void FSM_thread(Elevator* elevator, Door* door) {
         switch (elevator->state)
         {
         case Neutral:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             update_door(door);
             elevator->state = logic(elevator);
             break;
         case StillUp:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             if(door->state == Closing) {
                 elevator->state = logic(elevator);
                 break;
@@ -26,6 +28,7 @@ void FSM_thread(Elevator* elevator, Door* door) {
             complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case StillDown:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             if(door->state == Closing) {
                 elevator->state = logic(elevator);
                 break;
@@ -36,6 +39,7 @@ void FSM_thread(Elevator* elevator, Door* door) {
             complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
             break;
         case MovingUp:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             update_door(door);
             floor_sensor = elevio_floorSensor();
             if(floor_sensor != -1) {
@@ -46,6 +50,7 @@ void FSM_thread(Elevator* elevator, Door* door) {
             }
             break;
         case MovingDown:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             update_door(door);
             floor_sensor = elevio_floorSensor();
             if(floor_sensor != -1) {
@@ -55,6 +60,7 @@ void FSM_thread(Elevator* elevator, Door* door) {
             }
             break;
         case FloorHitUp:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             update_door(door);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
@@ -62,6 +68,7 @@ void FSM_thread(Elevator* elevator, Door* door) {
              elevator->state = logic(elevator);
             break;
         case FloorhitDown:
+            printf("Elevator is currently in: %s \n", statesToString[elevator->state]);
             update_door(door);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);

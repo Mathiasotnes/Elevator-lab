@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <time.h>
+#include <stdio.h>
 
 #include "drivers/elevio.h"
 #include "inc/main.h"
@@ -12,7 +13,14 @@ int main() {
 
     /* Initialisering av heis bør skje her før vi går inn i FSM */
     Door* door = initialize_door(3000);
+    if(door != NULL)
+      printf("Innitilized doors\n");
+
     Elevator* elevator = initialize_elevator();
+    if(elevator != NULL)
+      printf("Initilized elevator");
+
+    printf("Starting fsm thread\n");
     while(1) {
       FSM_thread(elevator, door);
     }

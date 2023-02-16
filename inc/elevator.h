@@ -14,6 +14,16 @@ typedef enum ElevatorState {
     FloorhitDown
 } ElevatorState;
 
+static const char * const statesToString[] = {
+	[Neutral] = "Neutral",
+	[StillUp] = "StillUp",
+	[StillDown] = "StillDown",
+	[MovingUp] = "MovingUp",
+    [MovingDown] = "MovingDown",
+    [FloorHitUp] = "FloorHitUp",
+    [FloorhitDown] = "FloorhitDown"
+};
+
 typedef struct Elevator{
     int floor;
     ElevatorState state;

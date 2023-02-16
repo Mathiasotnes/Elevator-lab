@@ -1,4 +1,5 @@
 #include "../inc/interface.h"
+#include <stdio.h>
 
 /* Timeout in ms */
 Door* initialize_door(int timeout) {
@@ -21,6 +22,7 @@ void update_door(Door *door) {
     switch (door->state)
     {
     case Open:
+        printf("Door is open\n");
         elevio_doorOpenLamp(1);
         if(elapsed_time_ms > door->timeout) {
             door->state = Closing;
@@ -50,6 +52,7 @@ void update_door(Door *door) {
         }
         else {
             door->state = Closed;
+            printf("Door is closed\n");
         }
         break;
     case Closed:
