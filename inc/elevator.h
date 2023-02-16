@@ -3,6 +3,7 @@
 #include "../inc/order.h"
 #include "../driver/elevio.h"
 
+
 /* Datatypes */
 typedef enum ElevatorState {
     Neutral,
@@ -19,7 +20,9 @@ typedef struct Elevator{
     ElevatorState state;
 } Elevator;
 
-Elevator* initialize_elevator();
+extern Elevator elevator;
+
+void initialize_elevator();
 
 #endif
 

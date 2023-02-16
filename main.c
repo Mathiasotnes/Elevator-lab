@@ -7,16 +7,18 @@
 #include "inc/main.h"
 
 int order_list[N_FLOORS][N_BUTTONS];
+Elevator elevator;
+Door door;
 
 int main() {
     //elevio_init();
 
     /* Initialisering av heis bør skje her før vi går inn i FSM */
-    Door* door = initialize_door(3000);
-    Elevator* elevator = initialize_elevator();
+    initialize_door(3000);
+    initialize_elevator();
     initialize_order_list();
     while(1) {
-      FSM_thread(elevator, door);
+      FSM_thread();
     }
     
     printf("=== Example Program ===\n");

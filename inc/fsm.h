@@ -7,6 +7,6 @@
 
 
 /* Functions */
-void FSM_thread(Elevator* elevator, Door* door);
+void FSM_thread();
 
 #endif

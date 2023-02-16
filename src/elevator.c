@@ -3,9 +3,7 @@
 #include "../inc/fsm.h"
 #include "../driver/elevio.h"
 
-Elevator* initialize_elevator(){
-
-    Elevator *elevator;
+void initialize_elevator(){
 
     //Defining floor
     int currentFloor = elevio_floorSensor();
@@ -14,8 +12,6 @@ Elevator* initialize_elevator(){
         currentFloor = elevio_floorSensor();
     }
 
-    elevator->floor = currentFloor;
-    elevator->state = Neutral;
-
-    return elevator;
+    elevator.floor = currentFloor;
+    elevator.state = Neutral;
 }

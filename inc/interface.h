@@ -17,9 +17,11 @@ typedef struct Door{
   long elapsed_time;
 } Door;
 
+extern Door door;
+
 /* Functions */
-Door* initialize_door(int timeout);
-void open_door(Door *door);
-void update_door(Door *door);
+void initialize_door(int timeout);
+void open_door();
+void update_door();
 
 #endif
