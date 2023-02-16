@@ -13,8 +13,8 @@ typedef enum DoorState {
 typedef struct Door{
   DoorState state;
   int timeout;
-  clock_t start_time;  
-  clock_t elapsed_time;
+  long start_time;  
+  long elapsed_time;
 } Door;
 
 /* Functions */

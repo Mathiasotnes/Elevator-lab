@@ -8,14 +8,14 @@
 
 
 int main() {
-    elevio_init();
+    //elevio_init();
 
     /* Initialisering av heis bør skje her før vi går inn i FSM */
-    // Door* door = initialize_door(3000);
-    // Elevator* elevator = initialize_elevator();
-    // while(1) {
-    //   FSM_thread(elevator, door);
-    // }
+    Door* door = initialize_door(3000);
+    Elevator* elevator = initialize_elevator();
+    while(1) {
+      FSM_thread(elevator, door);
+    }
     
     printf("=== Example Program ===\n");
     // printf("Press the stop button on the elevator panel to exit\n");

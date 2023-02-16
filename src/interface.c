@@ -5,8 +5,8 @@ Door* initialize_door(int timeout) {
     Door *door;
     door->state = Open;
     door->timeout = timeout;
-    door->start_time = clock();
-    door->elapsed_time = clock();
+    door->start_time = time(NULL);
+    door->elapsed_time = time(NULL);
     return door;
 }
 
