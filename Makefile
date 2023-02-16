@@ -8,7 +8,7 @@ EXCLUDE     = '*test*'
 
 
 SOURCEDIR = src
-DRIVERDIR = drivers
+DRIVERDIR = driver
 OBJECTDIR = build
 
 SOURCES := $(patsubst $(SOURCEDIR)/%, %, $(shell find $(SOURCEDIR) -name '*.c'  ! -name $(EXCLUDE)  ! -path $(EXCLUDE)))

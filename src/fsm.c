@@ -1,5 +1,5 @@
 #include "../inc/fsm.h"
-#include "../drivers/elevio.h"
+#include "../driver/elevio.h"
 #include "../inc/logic.h"
 #include "../inc/interface.h"
 #include <stdio.h>

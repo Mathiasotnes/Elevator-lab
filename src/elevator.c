@@ -1,7 +1,7 @@
 #include "../inc/elevator.h"
 #include "../inc/interface.h"
 #include "../inc/fsm.h"
-#include "../drivers/elevio.h"
+#include "../driver/elevio.h"
 
 Elevator* initialize_elevator(){
 

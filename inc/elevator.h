@@ -1,7 +1,7 @@
 #ifndef INC_ELEVATOR_H
 #define INC_ELEVATOR_H
 #include "../inc/order.h"
-#include "../drivers/elevio.h"
+#include "../driver/elevio.h"
 
 /* Datatypes */
 typedef enum ElevatorState {

@@ -2,7 +2,7 @@
 #define INC_INTERFACE_H
 
 #include <time.h>
-#include "../drivers/elevio.h"
+#include "../driver/elevio.h"
 
 typedef enum DoorState {
     Open,
