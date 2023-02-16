@@ -14,11 +14,11 @@ int main() {
     /* Initialisering av heis bør skje her før vi går inn i FSM */
     Door* door = initialize_door(3000);
     if(door != NULL)
-      printf("Innitilized doors\n");
+      printf("Doors initilized\n");
 
     Elevator* elevator = initialize_elevator();
     if(elevator != NULL)
-      printf("Initilized elevator");
+      printf("Elevator initilized");
 
     printf("Starting fsm thread\n");
     while(1) {
@@ -61,7 +61,7 @@ int main() {
     //         break;
     //     }
         
-    //     nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
+         nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
     // }
 
     return 0;
