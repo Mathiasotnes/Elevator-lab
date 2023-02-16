@@ -7,9 +7,6 @@ Elevator* initialize_elevator(){
 
     Elevator *elevator;
 
-    //Intilizing queue
-    elevator->queue = initialize_order_list(); 
-
     //Defining floor
     int currentFloor = elevio_floorSensor();
     while(currentFloor == -1){

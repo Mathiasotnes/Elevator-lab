@@ -6,7 +6,7 @@
 
 void FSM_thread(Elevator* elevator, Door* door) {
     int floor_sensor = -1;
-    update_orders(elevator->queue);
+    update_orders();
         switch (elevator->state)
         {
         case Neutral:
@@ -22,8 +22,8 @@ void FSM_thread(Elevator* elevator, Door* door) {
                 open_door(door);
             }
             update_door(door);
-            complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
-            complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
+            complete_order(elevator->floor, BUTTON_HALL_DOWN);
+            complete_order(elevator->floor, BUTTON_CAB);
             break;
         case StillDown:
             if(door->state == Closing) {
@@ -32,8 +32,8 @@ void FSM_thread(Elevator* elevator, Door* door) {
             }
             door->state = Open;
             update_door(door);
-            complete_order(elevator->queue, elevator->floor, BUTTON_HALL_DOWN);
-            complete_order(elevator->queue, elevator->floor, BUTTON_CAB);
+            complete_order(elevator->floor, BUTTON_HALL_DOWN);
+            complete_order(elevator->floor, BUTTON_CAB);
             break;
         case MovingUp:
             update_door(door);

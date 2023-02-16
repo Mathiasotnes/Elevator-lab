@@ -6,6 +6,7 @@
 #include "driver/elevio.h"
 #include "inc/main.h"
 
+int order_list[N_FLOORS][N_BUTTONS];
 
 int main() {
     //elevio_init();
@@ -13,6 +14,7 @@ int main() {
     /* Initialisering av heis bør skje her før vi går inn i FSM */
     Door* door = initialize_door(3000);
     Elevator* elevator = initialize_elevator();
+    initialize_order_list();
     while(1) {
       FSM_thread(elevator, door);
     }

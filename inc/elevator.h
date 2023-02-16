@@ -17,9 +17,6 @@ typedef enum ElevatorState {
 typedef struct Elevator{
     int floor;
     ElevatorState state;
-    //Order order_list[20];
-
-    OrderMatrix *queue;
 } Elevator;
 
 Elevator* initialize_elevator();
