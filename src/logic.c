@@ -45,9 +45,6 @@ ElevatorState logic() {
     return next_state;
 }
 
-/**
- * TODO: What happens when order is coming ON current floor
- */
 ElevatorState fromNeutral(){
     //1. Check order from whithin
     for(int f = 0; f < N_FLOORS; f++){ 
