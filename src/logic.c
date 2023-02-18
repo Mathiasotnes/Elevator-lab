@@ -49,166 +49,109 @@ ElevatorState logic() {
  * TODO: What happens when order is coming ON current floor
  */
 ElevatorState fromNeutral(){
-    // 1. Check for edge-cases
-    if(elevator.floor == 1 || elevator.floor == 4){
-        for(int f = 0; f < N_FLOORS; f++){
-            if(order_list[f][2] == BTN_PRESSED && f >= elevator.floor)
-                return StillUp;
-            else if(order_list[f][2] == BTN_PRESSED && f <= elevator.floor)
-                return StillDown;   
-        }
-        
-    /*
-        for (int i = 0; i < 20; i++){
-            if(elevator.order_list[i].valid){
-                if(elevator.order_list[i].start_floor > elevator.floor)
-                    return StillUp;
-                else if(elevator.order_list[i].start_floor < elevator.floor)
-                    return StillDown;
-            }
-        }
-    */
-    }
-
-    //2. Check order from whithin
+    //1. Check order from whithin
     for(int f = 0; f < N_FLOORS; f++){ 
         if(order_list[f][2] == BTN_PRESSED && f > elevator.floor)
             return StillUp;
         else if(order_list[f][2] == BTN_PRESSED && f < elevator.floor)
             return StillDown;
+        else if(order_list[f][2] == BTN_PRESSED && f == elevator.floor) // NB!!!
+            return StillUp;
     }
 
-    /*
-    for (int i = 0; i < 20; i++){
-        if(elevator.order_list[i].valid){
-            if(elevator.order_list[i].stop_floor > elevator.floor)
-                return StillUp;
-            else if(elevator.order_list[i].stop_floor < elevator.floor)
-                return StillDown;
-        }
-    }
-    */
+    //2. Check for current floor
+    if(order_list[elevator.floor][0])
+        return StillUp;
+    else if(order_list[elevator.floor][1])
+        return StillDown;
     
-    //3. Checks for orders from outside cabin
+    //2. Checks for orders from outside cabin
     for(int f = 0; f < N_FLOORS; f++){
-        for(int b = 0; b < N_BUTTONS; b++){
+        for(int b = 0; b < 2; b++){
             if(order_list[f][b] == BTN_PRESSED && f > elevator.floor)
                 return StillUp;
             else if(order_list[f][b] == BTN_PRESSED && f < elevator.floor)
                 return StillDown;
         }
     }
-
-    /*
-    for (int i = 0; i < 20; i++){
-        if(elevator.order_list[i].valid){
-            if(elevator.order_list[i].start_floor > elevator.floor)
-                return StillUp;
-            else if(elevator.order_list[i].start_floor < elevator.floor)
-                return StillDown;
-        }
-    }
-    */
     
     //4. No orders found keeping neutral position
     return Neutral;
 }
 
 ElevatorState fromStill(){
-
-    //Prioritze checking for floor hits with order list
-    for(int f = 0; f < N_FLOORS; f++){
-        if(order_list[f][2] == elevator.floor && elevator.state == StillUp)
-            return FloorHitUp;
-        else if(order_list[f][2] == elevator.floor && elevator.state == StillDown)
-            return FloorhitDown;
-    }
-
-    /*
-    for (int i = 0; i < 20; i++){
-        if(elevator.order_list[i].valid){
-            if (elevator.order_list[i].stop_floor == elevator.floor && elevator.state == StillUp)
-                return FloorHitUp;
-            else if (elevator.order_list[i].stop_floor == elevator.floor && elevator.state == StillDown)
-                return FloorhitDown;
-        }
-    }
-    */
+    //Check for floor hit
+    if(order_list[elevator.floor][2] && elevator.state == StillUp)
+        return FloorHitUp;
+    else if(order_list[elevator.floor][2] && elevator.state == StillDown)
+        return FloorhitDown;
 
     //if no floor-hit, detmerine if we should keep going
-    for(int f = 0; f < N_FLOORS; f++){
-        if(elevator.state == StillUp){
-            if(order_list[f][0] && f > elevator.floor)
+    if(elevator.state == StillUp){
+        for (int f = elevator.floor; f < 4; f++){
+            if(order_list[f][0])
+                return MovingUp;
+            else if(f == 3 && order_list[f][1])
                 return MovingUp;
         }
-        if(elevator.state == StillDown){
-            if(order_list[f][1] && f < elevator.floor)
+    }
+    else if(elevator.state == StillDown){
+        for (int f = elevator.floor; f >= 0; f--){
+            if(order_list[f][1])
+                return MovingDown;
+            if(f == 0 && order_list[f][0])
                 return MovingDown;
         }
     }
 
-    /*
-    for (int i = 0; i < 20; i++){
-        if(elevator.order_list[i].valid){
-            if(elevator.state == StillUp){
-                if(elevator.order_list[i].direction == up && elevator.order_list[i].start_floor > elevator.floor)
-                    return MovingUp;
-            }
-            if (elevator.state == StillDown){
-                 if(elevator.order_list[i].direction == down && elevator.order_list[i].start_floor < elevator.floor)
-                    return MovingDown;
-            }
-        }
-    }
-    */
-
-    //If there were no order from cabin, and no orders from outside.
-    //Elevator should be finished and go to neutral
+    //If there were no order from cabin, and no orders from outside:
     return Neutral;
 }
 
 ElevatorState fromFloorHit(){
-    //Checks for edge cases
-    //TODO: needs to be adressed in statediagram
-    if(elevator.floor == 4)
-        return Neutral;
-    else if (elevator.floor == 1)
-        return Neutral;
+    //Checks for request from within
+    if(order_list[elevator.floor][2]){ //If someone also has requested from outside light impementation should update TWO lights
+        if(elevator.state == FloorHitUp)
+            return StillUp;
+        else if(elevator.state == FloorhitDown)
+            return StillDown;
+    }
 
-    //Checks if we should stop here
-    //Important that order is deleted whithin next iteration else we are trapped
-    for(int f = 0; f < N_FLOORS; f++){
-        if(order_list[f][2] == BTN_PRESSED && f == elevator.floor){
-            if(elevator.state == FloorHitUp)
+    //Checks for request from outside at current floor
+    if(elevator.state == FloorHitUp){
+        if(order_list[elevator.floor][0])
+            return StillUp;
+        //Checks for edge case
+        else if(elevator.floor == 3){
+            if(order_list[elevator.floor][1])
                 return StillUp;
-            else if(elevator.state == FloorhitDown)
+        }
+    }
+    else if(elevator.state == FloorhitDown){
+        if(order_list[elevator.floor][1])
+            return StillDown;
+        //Checks for edge case
+        else if(elevator.floor == 0){
+            if(order_list[elevator.floor][0])
                 return StillDown;
         }
     }
-
-    /*
-    for (int i = 0; i < 20; i++){
-        if(elevator.order_list[i].valid){
-            if(elevator.order_list[i].stop_floor == elevator.floor){
-                if(elevator.state == FloorHitUp)
-                    return StillUp;
-                else if(elevator.state == FloorhitDown)
-                    return StillDown;
-            }
-        }
-    }
-    */
     
-    //If elevator is not stopping (if we are going XX we should keep going same direction)
+    //Check if we have reached one of the edges
+    if(elevator.state == FloorHitUp && elevator.floor == 3)
+        return StillUp;
+    else if(elevator.state == FloorhitDown && elevator.floor == 0)
+        return StillDown;
+    
+    //If no order from outside/innside and no edge case we should keep going
     if(elevator.state == FloorHitUp)
         return MovingUp;
     else if(elevator.state == FloorhitDown)
         return MovingDown;
     else{
         //This should never happen, but is implemented purly for debugging purposes
-        //printf("Elevator has come to undefined state based on current state: %s \n", to_state_str[elevator.state]);
         printf("Error! Elevator is set to neutral position!\n");
-        printf("Please build beter elevator!\n");
+        printf("Please build better elevator!\n");
         return Neutral;
     }
 }

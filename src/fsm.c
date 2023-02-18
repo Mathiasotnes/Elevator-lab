@@ -27,7 +27,7 @@ void FSM_thread() {
                 open_door();
             }
             update_door();
-            complete_order(elevator.floor, BUTTON_HALL_DOWN);
+            complete_order(elevator.floor, BUTTON_HALL_DOWN); //<- Should be HALL_UP??
             complete_order(elevator.floor, BUTTON_CAB);
             break;
         case StillDown:
