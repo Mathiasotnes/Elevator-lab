@@ -20,6 +20,16 @@ typedef struct Elevator{
     ElevatorState state;
 } Elevator;
 
+static const char * const statesToString[] = {
+	[Neutral] = "Neutral",
+	[StillUp] = "StillUp",
+	[StillDown] = "StillDown",
+	[MovingUp] = "MovingUp",
+    [MovingDown] = "MovingDown",
+    [FloorHitUp] = "FloorHitUp",
+    [FloorhitDown] = "FloorhitDown"
+};
+
 extern Elevator elevator;
 
 void initialize_elevator();

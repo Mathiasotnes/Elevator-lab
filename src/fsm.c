@@ -11,6 +11,7 @@ void FSM_thread() {
     int floor_sensor = -1;
     update_orders();
     update_door();
+    printf("%s \r\n", statesToString[elevator.state]);
         switch (elevator.state)
         {
 
