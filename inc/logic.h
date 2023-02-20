@@ -24,7 +24,9 @@ ElevatorState fromNeutral();
  * 
  * @return ElevatorState 
  */
-ElevatorState fromStill();
+ElevatorState fromStillUp();
+
+ElevatorState fromStillDown();
 
 /**
  * @brief Gets called from fsm, when floor hit has accured.
@@ -32,6 +34,8 @@ ElevatorState fromStill();
  * 
  * @return ElevatorState 
  */
-ElevatorState fromFloorHit();
+ElevatorState fromFloorHitUp();
+
+ElevatorState fromFloorHitDown();
 
 #endif

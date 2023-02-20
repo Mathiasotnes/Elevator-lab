@@ -11,7 +11,7 @@ Elevator elevator;
 Door door;
 
 int main() {
-    //elevio_init();
+    elevio_init();
 
     /* Initialisering av heis bør skje her før vi går inn i FSM */
     initialize_door(3000);

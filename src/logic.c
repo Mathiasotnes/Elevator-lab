@@ -13,16 +13,16 @@ ElevatorState logic() {
             return fromNeutral();
             break;
         case StillUp:
-            return fromStill();
+            return fromStillUp();
             break;
         case StillDown:
-            return fromStill();
+            return fromStillDown();
             break;
         case FloorHitUp:
-            return fromFloorHit();
+            return fromFloorHitUp();
             break;
         case FloorhitDown:
-            return fromFloorHit();
+            return fromFloorHitDown();
             break;
         default:
             printf("Unknown state has accured, please build a better elevator ...");
@@ -32,109 +32,90 @@ ElevatorState logic() {
 }
 
 ElevatorState fromNeutral(){
-    //1. Check order from whithin
-    for(int f = 0; f < N_FLOORS; f++){ 
-        if(order_list[f][2] == BTN_PRESSED && f > elevator.floor)
-            return StillUp;
-        else if(order_list[f][2] == BTN_PRESSED && f < elevator.floor)
-            return StillDown;
-        else if(order_list[f][2] == BTN_PRESSED && f == elevator.floor) // NB!!!
-            return StillUp;
-    }
-
-    //2. Check for current floor
-    if(order_list[elevator.floor][0])
+    //Check current floor
+    if(order_list[elevator.floor][0]) {
         return StillUp;
-    else if(order_list[elevator.floor][1])
+    }
+    else if(order_list[elevator.floor][1]) {
         return StillDown;
-    
-    //2. Checks for orders from outside cabin
-    for(int f = 0; f < N_FLOORS; f++){
-        for(int b = 0; b < 2; b++){
-            if(order_list[f][b] == BTN_PRESSED && f > elevator.floor)
-                return StillUp;
-            else if(order_list[f][b] == BTN_PRESSED && f < elevator.floor)
+    }
+    //Check if orders downwards exists
+    for(int f = elevator.floor; f >= 0; f--) {
+        for(int b = 0; b <= 2; b++) {
+            if(order_list[f][b]) {
                 return StillDown;
+            }
         }
     }
-    
-    //4. No orders found keeping neutral position
+    //Check if orders upwards exists
+    for(int f = elevator.floor; f < 4; f++) {
+        for(int b = 0; b <= 2; b++) {
+            if(order_list[f][b]) {
+                return StillUp;
+            }
+        }
+    }
     return Neutral;
 }
 
-ElevatorState fromStill(){
-    //Check for floor hit
-    if(order_list[elevator.floor][2] && elevator.state == StillUp)
-        return FloorHitUp;
-    else if(order_list[elevator.floor][2] && elevator.state == StillDown)
-        return FloorhitDown;
-
-    //if no floor-hit, detmerine if we should keep going
-    if(elevator.state == StillUp){
-        for (int f = elevator.floor; f < 4; f++){
-            if(order_list[f][0])
-                return MovingUp;
-            else if(f == 3 && order_list[f][1])
-                return MovingUp;
+ElevatorState fromStillUp(){
+    //Check buttons in coupè
+    for(int f = elevator.floor; f < 4; f++) {
+        if(order_list[f][2]) {
+            return MovingUp;
         }
     }
-    else if(elevator.state == StillDown){
-        for (int f = elevator.floor; f >= 0; f--){
-            if(order_list[f][1])
-                return MovingDown;
-            if(f == 0 && order_list[f][0])
-                return MovingDown;
+    //Check all the up-buttons above
+    for(int f = elevator.floor; f < 4; f++) {
+        if(order_list[f][0]) {
+            return MovingUp;
         }
     }
-
-    //If there were no order from cabin, and no orders from outside:
+    //Check all the down-buttons above
+    for(int f = 3; f > elevator.floor; f--) {
+        if(order_list[f][1]) {
+            return MovingUp;
+        }
+    }
+    //No orders below -> go to neutral.
     return Neutral;
 }
 
-ElevatorState fromFloorHit(){
-    //Checks for request from within
-    if(order_list[elevator.floor][2]){ //If someone also has requested from outside light impementation should update TWO lights
-        if(elevator.state == FloorHitUp)
-            return StillUp;
-        else if(elevator.state == FloorhitDown)
-            return StillDown;
+ElevatorState fromStillDown() {
+    //Check buttons in coupè
+    for(int f = elevator.floor; f >= 0; f--) {
+        if(order_list[f][2]) {
+            return MovingDown;
+        }
     }
+    //Check all the down-buttons below
+    for(int f = elevator.floor; f >= 0; f--) {
+        if(order_list[f][1]) {
+            return MovingDown;
+        }
+    }
+    //Check all the up-buttons below
+    for(int f = 0; f < elevator.floor; f++) {
+        if(order_list[f][0]) {
+            return MovingDown;
+        }
+    }
+    //No orders below -> go to neutral.
+    return Neutral;
+}
 
-    //Checks for request from outside at current floor
-    if(elevator.state == FloorHitUp){
-        if(order_list[elevator.floor][0])
-            return StillUp;
-        //Checks for edge case
-        else if(elevator.floor == 3){
-            if(order_list[elevator.floor][1])
-                return StillUp;
-        }
-    }
-    else if(elevator.state == FloorhitDown){
-        if(order_list[elevator.floor][1])
-            return StillDown;
-        //Checks for edge case
-        else if(elevator.floor == 0){
-            if(order_list[elevator.floor][0])
-                return StillDown;
-        }
-    }
-    
-    //Check if we have reached one of the edges
-    if(elevator.state == FloorHitUp && elevator.floor == 3)
-        return StillUp;
-    else if(elevator.state == FloorhitDown && elevator.floor == 0)
-        return StillDown;
-    
-    //If no order from outside/innside and no edge case we should keep going
-    if(elevator.state == FloorHitUp)
-        return MovingUp;
-    else if(elevator.state == FloorhitDown)
-        return MovingDown;
-    else{
-        //This should never happen, but is implemented purly for debugging purposes
-        printf("Error! Elevator is set to neutral position!\n");
-        printf("Please build better elevator!\n");
+ElevatorState fromFloorHitUp(){
+    //Check for edge-cases
+    if(elevator.floor == 3) {
         return Neutral;
     }
+    return StillUp;
+}
+
+ElevatorState fromFloorHitDown() {
+    //Check for edge-cases
+    if(elevator.floor == 0) {
+        return Neutral;
+    }
+    return StillDown;
 }
