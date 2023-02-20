@@ -21,6 +21,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                open_door();
                 break;
             }
             elevio_stopLamp(0);
@@ -34,6 +35,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                open_door();
                 break;
             }
             elevio_stopLamp(0);
@@ -55,6 +57,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                open_door();
                 break;
             }
             elevio_stopLamp(0);
@@ -75,6 +78,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                elevator.state = Neutral;
                 break;
             }
             elevio_stopLamp(0);
@@ -94,6 +98,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                elevator.state = Neutral;
                 break;
             }
             elevio_stopLamp(0);
@@ -112,6 +117,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                open_door();
                 break;
             }
             elevio_stopLamp(0);
@@ -128,6 +134,7 @@ void FSM_thread() {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 clean_orders();
+                open_door();
                 break;
             }
             elevio_stopLamp(0);

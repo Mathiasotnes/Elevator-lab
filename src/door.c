@@ -2,7 +2,7 @@
 
 /* Timeout in ms */
 void initialize_door(int timeout) {
-    door.state = Open;
+    door.state = Closed;
     door.timeout = timeout;
     door.start_time = time(NULL);
     door.elapsed_time = time(NULL);
