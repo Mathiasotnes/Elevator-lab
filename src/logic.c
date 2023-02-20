@@ -32,6 +32,13 @@ ElevatorState logic() {
 }
 
 ElevatorState fromNeutral(){
+    //Check current floor
+    if(order_list[elevator.floor][0]) {
+        return StillUp;
+    }
+    else if(order_list[elevator.floor][1]) {
+        return StillDown;
+    }
     //Check if orders downwards exists
     for(int f = elevator.floor; f >= 0; f--) {
         for(int b = 0; b <= 2; b++) {

@@ -10,19 +10,30 @@ extern Elevator elevator;
 void FSM_thread() {
     int floor_sensor = -1;
     update_orders();
+    update_door();
         switch (elevator.state)
         {
 
         case Neutral:
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_STOP);
-            update_door();
             elevator.state = logic();
             break;
 
 
         case StillUp:
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_STOP);
-            update_door();
             if(door.state == Closed) {
                 elevator.state = logic();
             }
@@ -32,8 +43,13 @@ void FSM_thread() {
 
 
         case StillDown:
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_STOP);
-            update_door();
             if(door.state == Closed) {
                 elevator.state = logic();
             }
@@ -43,7 +59,12 @@ void FSM_thread() {
 
 
         case MovingUp:
-            update_door();
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_UP);
             floor_sensor = elevio_floorSensor();
             if(floor_sensor != -1) {
@@ -56,7 +77,12 @@ void FSM_thread() {
 
 
         case MovingDown:
-            update_door();
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_DOWN);
             floor_sensor = elevio_floorSensor();
             if(floor_sensor != -1) {
@@ -68,7 +94,12 @@ void FSM_thread() {
 
 
         case FloorHitUp:
-            update_door();
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_STOP);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
@@ -81,7 +112,12 @@ void FSM_thread() {
 
 
         case FloorhitDown:
-            update_door();
+            if(elevio_stopButton) {
+                elevio_stopLamp(1);
+                elevio_motorDirection(DIRN_STOP);
+                break;
+            }
+            elevio_stopLamp(0);
             elevio_motorDirection(DIRN_STOP);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
