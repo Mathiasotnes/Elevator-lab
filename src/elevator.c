@@ -1,5 +1,5 @@
 #include "../inc/elevator.h"
-#include "../inc/interface.h"
+#include "../inc/door.h"
 #include "../inc/fsm.h"
 #include "../driver/elevio.h"
 

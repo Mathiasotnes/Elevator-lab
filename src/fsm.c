@@ -1,7 +1,7 @@
 #include "../inc/fsm.h"
 #include "../driver/elevio.h"
 #include "../inc/logic.h"
-#include "../inc/interface.h"
+#include "../inc/door.h"
 #include <stdio.h>
 
 extern Door door;
@@ -12,35 +12,36 @@ void FSM_thread() {
     update_orders();
         switch (elevator.state)
         {
+
         case Neutral:
             elevio_motorDirection(DIRN_STOP);
             update_door();
             elevator.state = logic();
             break;
+
+
         case StillUp:
             elevio_motorDirection(DIRN_STOP);
-            if(door.state == Closing) {
-                elevator.state = logic();
-                break;
-            }
-            if(door.state == Closed) {
-                open_door();
-            }
             update_door();
-            complete_order(elevator.floor, BUTTON_HALL_DOWN); //<- Should be HALL_UP??
+            if(door.state == Closed) {
+                elevator.state = logic();
+            }
+            complete_order(elevator.floor, BUTTON_HALL_UP);
             complete_order(elevator.floor, BUTTON_CAB);
             break;
+
+
         case StillDown:
             elevio_motorDirection(DIRN_STOP);
-            if(door.state == Closing) {
-                elevator.state = logic();
-                break;
-            }
-            door.state = Open;
             update_door();
+            if(door.state == Closed) {
+                elevator.state = logic();
+            }
             complete_order(elevator.floor, BUTTON_HALL_DOWN);
             complete_order(elevator.floor, BUTTON_CAB);
             break;
+
+
         case MovingUp:
             update_door();
             elevio_motorDirection(DIRN_UP);
@@ -52,6 +53,8 @@ void FSM_thread() {
                 break;
             }
             break;
+
+
         case MovingDown:
             update_door();
             elevio_motorDirection(DIRN_DOWN);
@@ -62,22 +65,34 @@ void FSM_thread() {
                 elevio_floorIndicator(floor_sensor);
             }
             break;
+
+
         case FloorHitUp:
             update_door();
             elevio_motorDirection(DIRN_STOP);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
             }
-             elevator.state = logic();
+            elevator.state = logic();
+            if(elevator.state == StillUp) {
+                open_door();                    // open_door() er nå en entry-funksjon til Still-states, 
+            }                                   // og skal lukkes etter 3 sekunder derfra.
             break;
+
+
         case FloorhitDown:
             update_door();
             elevio_motorDirection(DIRN_STOP);
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
             }
-             elevator.state = logic();
+            elevator.state = logic();
+            if(elevator.state == StillDown) {
+                open_door();
+            }
             break;
+
+
         default:
             elevio_motorDirection(DIRN_STOP);
             printf("Elevator has been set in service mode, please use stairs!\n");

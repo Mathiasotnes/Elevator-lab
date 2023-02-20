@@ -20,8 +20,9 @@ int main() {
     while(1) {
       FSM_thread();
     }
-    
-    printf("=== Example Program ===\n");
+
+    printf("Something is horribly wrong. Evacuate to live.");
+    // printf("=== Example Program ===\n");
     // printf("Press the stop button on the elevator panel to exit\n");
 
     // elevio_motorDirection(DIRN_UP);

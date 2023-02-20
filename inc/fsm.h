@@ -1,5 +1,5 @@
 #include "elevator.h"
-#include "interface.h"
+#include "door.h"
 
 #ifndef INC_FSM_H
 #define INC_FSM_H

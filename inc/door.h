@@ -6,7 +6,6 @@
 
 typedef enum DoorState {
     Open,
-    Closing,
     Closed
 } DoorState;
 
