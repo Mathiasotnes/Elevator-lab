@@ -2,6 +2,7 @@
 #include "../driver/elevio.h"
 #include "../inc/logic.h"
 #include "../inc/door.h"
+#include "../inc/order.h"
 #include <stdio.h>
 
 extern Door door;
@@ -19,6 +20,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -31,6 +33,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -51,6 +54,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -70,6 +74,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -88,6 +93,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -105,6 +111,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -112,10 +119,7 @@ void FSM_thread() {
             if(floor_sensor != -1) {
                 elevio_floorIndicator(floor_sensor);
             }
-            elevator.state = logic();
-            if(elevator.state == StillUp) {
-                open_door();                    // open_door() er nå en entry-funksjon til Still-states, 
-            }                                   // og skal lukkes etter 3 sekunder derfra.
+            elevator.state = logic();                               
             break;
 
 
@@ -123,6 +127,7 @@ void FSM_thread() {
             if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
+                clean_orders();
                 break;
             }
             elevio_stopLamp(0);
@@ -131,9 +136,6 @@ void FSM_thread() {
                 elevio_floorIndicator(floor_sensor);
             }
             elevator.state = logic();
-            if(elevator.state == StillDown) {
-                open_door();
-            }
             break;
 
 

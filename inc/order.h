@@ -21,5 +21,6 @@ void initialize_order_list();
 void create_order(int floor, ButtonType button_type);
 void complete_order(int floor, ButtonType button_type);
 void update_orders();
+void clean_orders();
 
 #endif
