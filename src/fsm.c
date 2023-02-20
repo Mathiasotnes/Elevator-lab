@@ -16,7 +16,7 @@ void FSM_thread() {
         {
 
         case Neutral:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -28,7 +28,7 @@ void FSM_thread() {
 
 
         case StillUp:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -44,7 +44,7 @@ void FSM_thread() {
 
 
         case StillDown:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -60,7 +60,7 @@ void FSM_thread() {
 
 
         case MovingUp:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -78,7 +78,7 @@ void FSM_thread() {
 
 
         case MovingDown:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -95,7 +95,7 @@ void FSM_thread() {
 
 
         case FloorHitUp:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
@@ -113,7 +113,7 @@ void FSM_thread() {
 
 
         case FloorhitDown:
-            if(elevio_stopButton) {
+            if(elevio_stopButton()) {
                 elevio_stopLamp(1);
                 elevio_motorDirection(DIRN_STOP);
                 break;
