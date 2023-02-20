@@ -64,10 +64,10 @@ ElevatorState fromNeutral(){
 
 ElevatorState fromStill(){
     //Check for floor hit
-    if(order_list[elevator.floor][2] && elevator.state == StillUp)
-        return FloorHitUp;
-    else if(order_list[elevator.floor][2] && elevator.state == StillDown)
-        return FloorhitDown;
+    // if(order_list[elevator.floor][2] && elevator.state == StillUp)
+    //     return FloorHitUp;
+    // else if(order_list[elevator.floor][2] && elevator.state == StillDown)
+    //     return FloorhitDown;
 
     //if no floor-hit, detmerine if we should keep going
     if(elevator.state == StillUp){
