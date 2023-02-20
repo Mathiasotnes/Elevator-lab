@@ -15,7 +15,6 @@ void open_door() {
 }
 
 void update_door() {
-    int elapsed_time_ms = (door.elapsed_time - door.start_time) * 1000 / CLOCKS_PER_SEC;
     switch (door.state)
     {
         
@@ -25,7 +24,7 @@ void update_door() {
             door.start_time = time(NULL);
             door.elapsed_time = time(NULL);
         }
-        else if(elapsed_time_ms >= door.timeout) {
+        else if(door.elapsed_time - door.start_time >= door.timeout) {
             door.state = Closed;
             break;
         }

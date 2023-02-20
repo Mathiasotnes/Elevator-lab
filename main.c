@@ -14,7 +14,7 @@ int main() {
     elevio_init();
 
     /* Initialisering av heis bør skje her før vi går inn i FSM */
-    initialize_door(3000);
+    initialize_door(3);
     initialize_elevator();
     initialize_order_list();
     while(1) {

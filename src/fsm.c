@@ -38,8 +38,12 @@ void FSM_thread() {
             if(door.state == Closed) {
                 elevator.state = logic();
             }
-            complete_order(elevator.floor, BUTTON_HALL_UP);
-            complete_order(elevator.floor, BUTTON_CAB);
+            if(order_list[elevator.floor][BUTTON_HALL_UP] ||order_list[elevator.floor][BUTTON_CAB]) {
+                complete_order(elevator.floor, BUTTON_HALL_UP);
+                complete_order(elevator.floor, BUTTON_CAB);
+                open_door();
+            }
+            
             break;
 
 
@@ -54,8 +58,11 @@ void FSM_thread() {
             if(door.state == Closed) {
                 elevator.state = logic();
             }
-            complete_order(elevator.floor, BUTTON_HALL_DOWN);
-            complete_order(elevator.floor, BUTTON_CAB);
+            if(order_list[elevator.floor][BUTTON_HALL_DOWN] ||order_list[elevator.floor][BUTTON_CAB]) {
+                complete_order(elevator.floor, BUTTON_HALL_DOWN);
+                complete_order(elevator.floor, BUTTON_CAB);
+                open_door();
+            }
             break;
 
 
