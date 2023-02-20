@@ -18,7 +18,7 @@ void update_door() {
     int elapsed_time_ms = (door.elapsed_time - door.start_time) * 1000 / CLOCKS_PER_SEC;
     switch (door.state)
     {
-
+        
     case Open:
         elevio_doorOpenLamp(1);
         if(elevio_stopButton() || elevio_obstruction()) {
@@ -39,7 +39,7 @@ void update_door() {
         elevio_doorOpenLamp(0);
         break;
 
-        
+
     default:
         break;
     }
